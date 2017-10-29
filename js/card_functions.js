@@ -1,7 +1,7 @@
 var req = {
 	'type':'',
 	'gamemode':'',
-	'room_name',''
+	'name':''
 }
 
 var cards = [
@@ -24,13 +24,21 @@ function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min) ) + min;
 }
 
-function host_game(gamemode,name) {
+function host_game(gamemode,name,link) {
 	if (name == '') {name = randomString(10);}
 	var local_req = req;
 	local_req['type'] = 'host';
 	local_req['gamemode'] = gamemode;
 	local_req['name'] = name;
-	$.post('/db/input.php',local_req,function() {alert('Game created!')});
+	console.log('host_game ran');
+	$.ajax({
+	  url: link,
+	  type: 'POST',
+	  dataType: "json",
+	  data: local_req,
+	  success: function(data) {alert(data);}
+	});
+	console.log('ajax');
 	return;
 }
 
